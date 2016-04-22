@@ -23,6 +23,7 @@ Returns:
 Adds the vertices (x0, y0, z0), (x1, y1, z1)
 and (x2, y2, z2) to the polygon matrix. They
 define a single triangle surface.
+
 04/16/13 13:05:59
 jdyrlandweaver
 ====================*/
@@ -43,6 +44,7 @@ Returns:
 Goes through polygons 3 points at a time, drawing 
 lines connecting each points to create bounding
 triangles
+
 04/16/13 13:13:27
 jdyrlandweaver
 ====================*/
@@ -75,14 +77,17 @@ void draw_polygons( struct matrix *polygons, screen s, color c ) {
 /*======== void add_sphere() ==========
   Inputs:   struct matrix * points
             double cx
-	        double cy
-		    double r
-		        double step  
+	    double cy
+	    double r
+	    double step  
   Returns: 
+
   adds all the points for a sphere with center 
   (cx, cy) and radius r.
+
   should call generate_sphere to create the
   necessary points
+
   jdyrlandweaver
   ====================*/
 void add_sphere( struct matrix * points, 
@@ -151,13 +156,16 @@ void add_sphere( struct matrix * points,
 /*======== void generate_sphere() ==========
   Inputs:   struct matrix * points
             double cx
-	        double cy
-		    double r
-		        double step  
+	    double cy
+	    double r
+	    double step  
   Returns: 
+
   Generates all the points along the surface of a 
   sphere with center (cx, cy) and radius r
+
   Adds these points to the matrix parameter
+
   03/22/12 11:30:26
   jdyrlandweaver
   ====================*/
@@ -194,19 +202,23 @@ void generate_sphere( struct matrix * points,
 /*======== void add_sphere() ==========
   Inputs:   struct matrix * points
             double cx
-	        double cy
-		    double r
-		        double step  
+	    double cy
+	    double r
+	    double step  
   Returns: 
+
   adds all the points for a sphere with center 
   (cx, cy) and radius r.
+
   should call generate_sphere to create the
   necessary points
+
   jdyrlandweaver
   ====================
 void add_sphere( struct matrix * points, 
- double cx, double cy, double r, 
-  int step ) {
+		 double cx, double cy, double r, 
+		 int step ) {
+
   struct matrix * temp;
   int lat, longt;
   int index;
@@ -214,22 +226,27 @@ void add_sphere( struct matrix * points,
   double px0, px1, px2, px3;
   double py0, py1, py2, py3;
   double pz0, pz1, pz2, pz3;
+
   num_steps = MAX_STEPS / step;
   num_points = num_steps * (num_steps + 1);
   
   temp = new_matrix( 4, num_points );
   //generate the points on the sphere
   generate_sphere( temp, cx, cy, r, step );
+
   int latStop, longStop, latStart, longStart;
   latStart = 0;
   latStop = num_steps;
   longStart = 0;
   longStop = 2;//num_steps;
+
   num_steps++;
   
   for ( lat = latStart; lat < latStop; lat++ ) {
     for ( longt = longStart; longt < longStop; longt++ ) {
+
       index = lat * num_steps + longt;
+
       px0 = temp->m[0][ index ];
       py0 = temp->m[1][ index ];
       pz0 = temp->m[2][ index ];
@@ -237,45 +254,54 @@ void add_sphere( struct matrix * points,
       px1 = temp->m[0][ (index + num_steps) % num_points ];
       py1 = temp->m[1][ (index + num_steps) % num_points ];
       pz1 = temp->m[2][ (index + num_steps) % num_points ];
+
       px3 = temp->m[0][ index + 1 ];
       py3 = temp->m[1][ index + 1 ];
       pz3 = temp->m[2][ index + 1 ];
+
       if (longt != longStop - 1) {
-      px2 = temp->m[0][ (index + num_steps + 1) % num_points ];
-      py2 = temp->m[1][ (index + num_steps + 1) % num_points ];
-      pz2 = temp->m[2][ (index + num_steps + 1) % num_points ];
+	px2 = temp->m[0][ (index + num_steps + 1) % num_points ];
+	py2 = temp->m[1][ (index + num_steps + 1) % num_points ];
+	pz2 = temp->m[2][ (index + num_steps + 1) % num_points ];
       }
       else {
-      px2 = temp->m[0][ (index + 1) % num_points ];
-      py2 = temp->m[1][ (index + 1) % num_points ];
-      pz2 = temp->m[2][ (index + 1) % num_points ];
+	px2 = temp->m[0][ (index + 1) % num_points ];
+	py2 = temp->m[1][ (index + 1) % num_points ];
+	pz2 = temp->m[2][ (index + 1) % num_points ];
       }
+
       if (longt != 0)
-      add_polygon( points, px0, py0, pz0, px1, py1, pz1, px2, py2, pz2 );
+	add_polygon( points, px0, py0, pz0, px1, py1, pz1, px2, py2, pz2 );
       if (longt != longStop - 1)
-      add_polygon( points, px2, py2, pz2, px3, py3, pz3, px0, py0, pz0 );
+	add_polygon( points, px2, py2, pz2, px3, py3, pz3, px0, py0, pz0 );
     }
   }
   free_matrix(temp);
 }
+
 /*======== void generate_sphere() ==========
   Inputs:   struct matrix * points
             double cx
-	        double cy
-		    double r
-		        double step  
+	    double cy
+	    double r
+	    double step  
   Returns: 
+
   Generates all the points along the surface of a 
   sphere with center (cx, cy) and radius r
+
   Adds these points to the matrix parameter
+
   03/22/12 11:30:26
   jdyrlandweaver
   ====================
 void generate_sphere( struct matrix * points, 
-      double cx, double cy, double r, 
-            int step ) {
+		      double cx, double cy, double r, 
+		      int step ) {
+
   int circle, rotation;
   double x, y, z, circ, rot;
+
   int rotStart = step * 0;
   int rotStop = MAX_STEPS;
   int circStart = step * 0;
@@ -284,12 +310,14 @@ void generate_sphere( struct matrix * points,
   for ( rotation = rotStart; rotation < rotStop; rotation += step ) {
     rot = (double)rotation / MAX_STEPS;
     for ( circle = circStart; circle < circStop; circle+= step ) {
+
       circ = (double)circle / MAX_STEPS;
       x = r * cos( M_PI * circ ) + cx;
       y = r * sin( M_PI * circ ) *
-      cos( 2 * M_PI * rot ) + cy;
+	cos( 2 * M_PI * rot ) + cy;
       z = r * sin( M_PI * circ ) *
-      sin( 2 * M_PI * rot );
+	sin( 2 * M_PI * rot );
+
       add_point( points, x, y, z);
     }
   }
@@ -298,15 +326,18 @@ void generate_sphere( struct matrix * points,
 /*======== void add_torus() ==========
   Inputs:   struct matrix * points
             double cx
-	        double cy
-		    double r1
-		        double r2
-			    double step  
+	    double cy
+	    double r1
+	    double r2
+	    double step  
   Returns: 
+
   adds all the points required to make a torus
   with center (cx, cy) and radii r1 and r2.
+
   should call generate_torus to create the
   necessary points
+
   03/22/12 13:34:03
   jdyrlandweaver
   ====================*/
@@ -383,13 +414,16 @@ void add_torus( struct matrix * points,
 /*======== void generate_torus() ==========
   Inputs:   struct matrix * points
             double cx
-	        double cy
-		    double r
-		        double step  
+	    double cy
+	    double r
+	    double step  
   Returns: 
+
   Generates all the points along the surface of a 
   tarus with center (cx, cy) and radii r1 and r2
+
   Adds these points to the matrix parameter
+
   03/22/12 11:30:26
   jdyrlandweaver
   ====================*/
@@ -425,15 +459,17 @@ void generate_torus( struct matrix * points,
 /*======== void add_box() ==========
   Inputs:   struct matrix * points
             double x
-	        double y
-		    double z
-		        double width
-			    double height
-			        double depth
+	    double y
+	    double z
+	    double width
+	    double height
+	    double depth
   Returns: 
+
   add the points for a rectagular prism whose 
   upper-left corner is (x, y, z) with width, 
   height and depth dimensions.
+
   jdyrlandweaver
   ====================*/
 void add_box( struct matrix * polygons,
@@ -503,10 +539,12 @@ void add_box( struct matrix * polygons,
 /*======== void add_circle() ==========
   Inputs:   struct matrix * points
             double cx
-	        double cy
-		    double y
-		        double step  
+	    double cy
+	    double y
+	    double step  
   Returns: 
+
+
   03/16/12 19:53:52
   jdyrlandweaver
   ====================*/
@@ -545,9 +583,11 @@ Inputs:   struct matrix *points
          double step
          int type  
 Returns: 
+
 Adds the curve bounded by the 4 points passsed as parameters
 of type specified in type (see matrix.h for curve type constants)
 to the matrix points
+
 03/16/12 15:24:25
 jdyrlandweaver
 ====================*/
@@ -657,23 +697,23 @@ void draw_lines( struct matrix * points, screen s, color c) {
     //draw extra pixels so points can actually be seen    
     /*
     draw_line( points->m[0][i]+1, points->m[1][i], 
-           points->m[0][i+1]+1, points->m[1][i+1], s, c);
+	       points->m[0][i+1]+1, points->m[1][i+1], s, c);
     draw_line( points->m[0][i], points->m[1][i]+1, 
-           points->m[0][i+1], points->m[1][i+1]+1, s, c);
+	       points->m[0][i+1], points->m[1][i+1]+1, s, c);
     draw_line( points->m[0][i]-1, points->m[1][i], 
-           points->m[0][i+1]-1, points->m[1][i+1], s, c);
+	       points->m[0][i+1]-1, points->m[1][i+1], s, c);
     draw_line( points->m[0][i], points->m[1][i]-1, 
-           points->m[0][i+1], points->m[1][i+1]-1, s, c);
+	       points->m[0][i+1], points->m[1][i+1]-1, s, c);
     draw_line( points->m[0][i]+1, points->m[1][i]+1, 
-           points->m[0][i+1]+1, points->m[1][i+1]+1, s, c);
+	       points->m[0][i+1]+1, points->m[1][i+1]+1, s, c);
     draw_line( points->m[0][i]-1, points->m[1][i]+1, 
-           points->m[0][i+1]-1, points->m[1][i+1]+1, s, c);
+	       points->m[0][i+1]-1, points->m[1][i+1]+1, s, c);
     draw_line( points->m[0][i]-1, points->m[1][i]-1, 
-           points->m[0][i+1]-1, points->m[1][i+1]-1, s, c);
+	       points->m[0][i+1]-1, points->m[1][i+1]-1, s, c);
     draw_line( points->m[0][i]+1, points->m[1][i]-1, 
-           points->m[0][i+1]+1, points->m[1][i+1]-1, s, c);
+	       points->m[0][i+1]+1, points->m[1][i+1]-1, s, c);
     */
-  }        
+  } 	       
 }
 
 

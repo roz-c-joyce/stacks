@@ -169,7 +169,7 @@ void parse_file ( char * filename,
       sscanf(line, "%lf %lf %lf", &x, &y, &z);
       tmp = make_scale(x, y, z);
       matrix_mult(orig->data[orig->top], tmp);
-      copy_matrix(tmp, orig->data[oring->top]);
+      copy_matrix(tmp, orig->data[orig->top]);
       //print_matrix(transform);
     }
     else if ( strncmp(line, "translate", strlen(line)) == 0 ) {
@@ -179,7 +179,7 @@ void parse_file ( char * filename,
       sscanf(line, "%lf %lf %lf", &x, &y, &z);
       tmp = make_translate(x, y, z);
       matrix_mult(orig->data[orig->top], tmp);
-      copy_matrix(tmp, orig->data[oring->top]);
+      copy_matrix(tmp, orig->data[orig->top]);
       //print_matrix(transform);
     }
     else if ( strncmp(line, "xrotate", strlen(line)) == 0 ) {
@@ -189,7 +189,7 @@ void parse_file ( char * filename,
       angle = angle * (M_PI / 180);
       tmp = make_rotX( angle);
       matrix_mult(orig->data[orig->top], tmp);
-      copy_matrix(tmp, orig->data[oring->top]);
+      copy_matrix(tmp, orig->data[orig->top]);
     }
     else if ( strncmp(line, "yrotate", strlen(line)) == 0 ) {
       //printf("ROTATE!\n");
@@ -198,7 +198,7 @@ void parse_file ( char * filename,
       angle = angle * (M_PI / 180);
       tmp = make_rotY( angle);
       matrix_mult(orig->data[orig->top], tmp);
-      copy_matrix(tmp, orig->data[oring->top]);
+      copy_matrix(tmp, orig->data[orig->top]);
     }
     else if ( strncmp(line, "zrotate", strlen(line)) == 0 ) {
       //printf("ROTATE!\n");
@@ -207,7 +207,7 @@ void parse_file ( char * filename,
       angle = angle * (M_PI / 180);
       tmp = make_rotZ( angle);
       matrix_mult(orig->data[orig->top], tmp);
-      copy_matrix(tmp, orig->data[oring->top]);
+      copy_matrix(tmp, orig->data[orig->top]);
     }
     else if ( strncmp(line, "ident", strlen(line)) == 0 ) {
       ident(transform);

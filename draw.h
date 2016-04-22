@@ -21,6 +21,10 @@ void draw_lines( struct matrix * points, screen s, color c);
 void draw_polygons( struct matrix * points, screen s, color c);
 
 //advanced shapes
+void add_box(struct matrix * points,
+	     double x, double y, double z,
+	     double width, double height, double depth);
+
 void add_circle( struct matrix * points, 
 		 double cx, double cy, 
 		 double r, double step );
